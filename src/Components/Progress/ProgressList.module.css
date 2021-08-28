@@ -1,0 +1,13 @@
+.main {
+    display: grid;
+    grid-template-columns: 1fr 8fr 1fr;
+    height: 100%;
+    padding: 20px;
+    
+}
+
+.list {
+    border: 1px solid black;
+    list-style: none;
+    padding-inline-start: 0px;
+}

@@ -1,0 +1,44 @@
+.main {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.border {
+    padding:30px;
+    
+}
+
+.title {
+    text-align: center;
+}
+
+.control {
+    display: block;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.button {
+    margin-top: 20px;
+}
+
+.form {
+    background-color: #f6f8fa;
+    border: 1px solid black;
+    padding: 30px 50px;
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    
+}
+
+.error {
+    color: red;
+    margin-top: 0;
+    margin-bottom: 0;
+}

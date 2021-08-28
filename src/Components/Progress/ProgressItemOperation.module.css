@@ -1,0 +1,17 @@
+.main {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.operation {
+    display: flex;
+    flex-direction: row;
+}
+
+.button {
+    width: 80px;
+    margin-right:10px;
+    margin-left:10px;
+}

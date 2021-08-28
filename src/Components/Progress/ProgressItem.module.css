@@ -1,0 +1,9 @@
+.main {
+    padding:40px;
+    border: 1px solid black;
+    padding-inline-start: 40px;
+}
+
+.item {
+    background-color: black;
+}

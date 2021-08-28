@@ -1,0 +1,9 @@
+.main {
+    display: grid;
+    grid-template-columns: 1fr 8fr 1fr;
+    padding: 20px;
+}
+
+.button {
+    height: 60px !important
+}
