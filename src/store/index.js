@@ -5,7 +5,6 @@ const userReducer = (state = {}, action) => {
     return {
       userIsAuth: action.userIsAuth,
       username: action.username,
-      token: action.token,
       progressData: action.progressData
     };
   }

@@ -5,7 +5,6 @@ const ProgressItem = (props) => {
   const startDate = new Date(props.startDate);
   const endDate = new Date(props.endDate);
   const today = new Date(Date.now());
-  console.log(startDate + " " + endDate + "" + today);
 
   const differenceDaysFromBegin =
   Math.ceil((endDate.getTime() - startDate.getTime()) / (1000 * 3600 * 24));

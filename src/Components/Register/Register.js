@@ -1,11 +1,8 @@
 import styles from "./Register.module.css";
 import Button from "../Layout/Button";
 import { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { Link, useHistory } from "react-router-dom";
 
 const Register = () => {
-  const history = useHistory();
   const [username, setUsername] = useState("");
   const [usernameIsChanged, setUsernameIsChanged] = useState(false);
   const [usernameError, setUsernameError] = useState("");
@@ -76,25 +73,30 @@ const Register = () => {
     setConfirm_passwd(event.target.value);
   };
 
-  const dispatch = useDispatch();
 
-
-
-  const buttonEvent = (event) => {
+  const submitHandler = (event) => {
     event.preventDefault();
-    dispatch({
-      type: "login",
-      userIsAuth: true,
-      username: username,
-      token: "",
-      progressData: [
-        { title: "2022", startDate: "01-01-2021", endDate: "01-01-2022" },
-        { title: "2023", startDate: "01-01-2021", endDate: "01-01-2023" },
-        { title: "2024", startDate: "01-01-2021", endDate: "01-01-2024" },
-      ],
-    });
 
-    history.push("/");
+
+    const user = { username: username, password: passwd };
+
+    fetch("http://localhost:5000/new-user", {
+      method: "POST",
+      mode: "cors",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(user),
+    })
+      .then((res) => {
+        res = res.json();
+      })
+      .then((data) => {
+        if (data.result) {
+          document.location("/");
+        }
+      });
   };
   return (
     <div className={styles.main}>
@@ -102,7 +104,8 @@ const Register = () => {
         <div className={styles.title}>
           <h1>Sign on</h1>
         </div>
-        <form onSubmit="/new-user" className={styles.form}>
+        <form onSubmit={submitHandler} className={styles.form}>
+          {/* <form action={'http://localhost:5000/new-user'} method="POST" className={styles.form}> */}
           <label className={styles.control}>Username:</label>
           <input
             className={styles.control}
@@ -145,7 +148,7 @@ const Register = () => {
           ) : (
             ""
           )}
-          <Button name="Sign on" type="submit" event={buttonEvent}></Button>
+          <Button name="Sign on" type="submit"></Button>
         </form>
       </div>
     </div>
