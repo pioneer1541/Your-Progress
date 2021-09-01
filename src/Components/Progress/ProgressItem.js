@@ -16,10 +16,10 @@ const ProgressItem = (props) => {
 
 
   return (
-    <li className={styles.main}>
+    <li className={styles.main} id={props.id}>
       <div>
         <div>
-          <ProgressItemOperation title={props.title}></ProgressItemOperation>
+          <ProgressItemOperation id={props.id} title={props.title} startDate={props.startDate} endDate={props.endDate}></ProgressItemOperation>
         </div>
       </div>
       <div>

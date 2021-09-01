@@ -1,8 +1,10 @@
 import styles from "./Register.module.css";
 import Button from "../Layout/Button";
 import { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 
 const Register = () => {
+  let history = useHistory()
   const [username, setUsername] = useState("");
   const [usernameIsChanged, setUsernameIsChanged] = useState(false);
   const [usernameError, setUsernameError] = useState("");
@@ -73,14 +75,12 @@ const Register = () => {
     setConfirm_passwd(event.target.value);
   };
 
-
   const submitHandler = (event) => {
     event.preventDefault();
 
-
     const user = { username: username, password: passwd };
 
-    fetch("http://localhost:5000/new-user", {
+    fetch("http://localhost:5000/user/new-user", {
       method: "POST",
       mode: "cors",
       headers: {
@@ -89,12 +89,10 @@ const Register = () => {
       },
       body: JSON.stringify(user),
     })
-      .then((res) => {
-        res = res.json();
-      })
+      .then((res) => (res = res.json()))
       .then((data) => {
         if (data.result) {
-          document.location("/");
+          history.push('/');
         }
       });
   };

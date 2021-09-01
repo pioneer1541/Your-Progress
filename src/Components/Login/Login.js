@@ -9,6 +9,7 @@ const Login = (props) => {
   const [loginError, setLoginError] = useState(false);
   const [user, setUser] = useState({});
   const dispatch = useDispatch();
+
   const usernameHandler = (event) => {
     const username = event.target.value;
     setUsername(username);
@@ -20,29 +21,29 @@ const Login = (props) => {
   };
 
   useEffect(() => {
-    if (user.token) {
-      localStorage.setItem("token", user.token);
-      dispatch({
-        type: "login",
-        userIsAuth: true,
-        username: user.username,
-        progressData: [
-          { title: "2022", startDate: "01-01-2021", endDate: "01-01-2022" },
-          { title: "2023", startDate: "01-01-2021", endDate: "01-01-2023" },
-          { title: "2024", startDate: "01-01-2021", endDate: "01-01-2024" },
-        ],
-      });
+    if (!loginError) {
+      if (user.token) {
+        localStorage.setItem("token", user.token);
+        dispatch({
+          type: "login",
+          userIsAuth: true,
+          username: user.username,
+        });
+        setLoginError(true)
+      }
     }
+    console.log(loginError)
   }, [user]);
 
   const loginHandler = (event) => {
     event.preventDefault();
+    console.log(1010)
     const user = {
       username: username,
       password: password,
     };
 
-    fetch("http://localhost:5000/login", {
+    fetch("http://localhost:5000/user/login", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -53,13 +54,16 @@ const Login = (props) => {
     })
       .then((res) => {
         if (!res.ok) {
-          setLoginError(false);
+          throw "Username or Password is incorrect!";
         } else {
-          return res = res.json();
+          return (res = res.json());
         }
-        
       })
-      .then((data) => setUser(data));
+      .then((data) => setUser(data))
+      .catch((error) => {
+        setLoginError(true);
+      });
+      console.log(1020)
   };
 
   return (

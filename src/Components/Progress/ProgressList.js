@@ -2,12 +2,12 @@ import ProgressItem from "./ProgressItem";
 import styles from "./ProgressList.module.css";
 import { useSelector } from "react-redux";
 
-const ProgressList = () => {
-  const userProgress = useSelector((state) => state.progressData);
-  let num = 1
+const ProgressList = props => {
+  let userProgress =[];
+  userProgress= props.taskList
   const data = userProgress.map((progress) => {
     return (
-        <ProgressItem key={num} title={progress.title} startDate={progress.startDate} endDate={progress.endDate}></ProgressItem>
+        <ProgressItem id={progress._id} title={progress.title} startDate={progress.startDate} endDate={progress.endDate}></ProgressItem>
     )
   });
   return (

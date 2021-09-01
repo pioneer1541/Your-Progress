@@ -33,11 +33,6 @@ function App() {
             type: "login",
             userIsAuth: true,
             username: user.username,
-            progressData: [
-              { title: "2022", startDate: "01-01-2021", endDate: "01-01-2022" },
-              { title: "2023", startDate: "01-01-2021", endDate: "01-01-2023" },
-              { title: "2024", startDate: "01-01-2021", endDate: "01-01-2024" },
-            ],
           });
         });
     }
