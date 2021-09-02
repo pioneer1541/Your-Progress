@@ -12,23 +12,35 @@ const userReducer = (state = initState, action) => {
         username: action.username,
         taskList: state.taskList,
       };
-      break;
+
     case "taskAddOne":
       return {
         userIsAuth: state.userIsAuth,
         username: state.username,
         taskList: [...state.taskList, action.task],
       };
-      break;
+
     case "taskUpdateAll":
       return {
         userIsAuth: state.userIsAuth,
         username: state.username,
         taskList: action.taskList,
       };
+    case "taskUpdateOne":
+      let newTaskList = state.taskList.map((task) => {
+        if (task._id === action.task._id) {
+          return action.task;
+        } else {
+          return task;
+        }
+      });
+      return {
+        userIsAuth: state.userIsAuth,
+        username: state.username,
+        taskList: newTaskList,
+      };
+    default:
       break;
-      default:
-        break;
   }
 
   return state;

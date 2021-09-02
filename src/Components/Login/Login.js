@@ -63,7 +63,6 @@ const Login = (props) => {
       .catch((error) => {
         setLoginError(true);
       });
-      console.log(1020)
   };
 
   return (
@@ -97,7 +96,10 @@ const Login = (props) => {
               Username or Password is incorrect!
             </div>
           )}
+          <div className={styles.actions}>
           <Button name="Sign in" type="submit"></Button>
+          </div>
+          
         </form>
       </div>
       <div className={styles.register}>

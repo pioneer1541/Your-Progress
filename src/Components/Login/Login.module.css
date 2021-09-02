@@ -1,32 +1,36 @@
 .main {
-    height: 100vh;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .border {
-    padding:30px;
-    
+  padding: 30px;
 }
 
 .title {
-    text-align: center;
+  text-align: center;
 }
 
 .control {
-    display: block;
-    margin-top: 5px;
-    margin-bottom: 5px;
+  display: block;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 .form {
-    background-color: #f6f8fa;
-    border: 1px solid black;
-    padding: 30px 40px;
-    display: flex;
-    flex-direction: column;
-    
+  background-color: #f6f8fa;
+  border: 1px solid black;
+  padding: 30px 40px;
+  display: flex;
+  flex-direction: column;
+}
+
+.actions {
+  display: flex;
+  width: 100%;
+  justify-content: center;
 }

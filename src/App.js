@@ -13,22 +13,23 @@ function App() {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      fetch("/", {
+      fetch("http://localhost:5000/", {
         method: "GET",
         mode: "cors",
         headers: {
           auth: token,
-          "Content-Type": "application/json",
+          'Accept': 'application/json',
         },
       })
         .then((res) => {
           if (!res.ok) {
             document.location("/");
           } else {
-            return (res = res.json);
+            return res.json();
           }
         })
         .then((user) => {
+          console.log(user);
           dispatch({
             type: "login",
             userIsAuth: true,
