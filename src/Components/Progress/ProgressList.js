@@ -1,6 +1,5 @@
 import ProgressItem from "./ProgressItem";
 import styles from "./ProgressList.module.css";
-import { useSelector } from "react-redux";
 
 const ProgressList = props => {
   let userProgress =[];

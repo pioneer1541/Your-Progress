@@ -1,5 +1,5 @@
 import styles from "./Register.module.css";
-import Button from "../Layout/Button";
+import Button from "../UI/Button";
 import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 

@@ -1,5 +1,5 @@
 import styles from "./Login.module.css";
-import Button from "../Layout/Button";
+import Button from "../UI/Button";
 import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 

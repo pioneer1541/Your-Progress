@@ -1,13 +1,15 @@
 import { useState } from "react";
-import Button from "../Layout/Button";
+import Button from "../UI/Button";
 import TaskCard from "../UI/TaskCard";
 import styles from "./ProgressItemOperation.module.css";
 import { useDispatch } from "react-redux";
 import MessageModal from "../UI/MessageModal";
+import ConfirmationModal from "../UI/ConfirmationModal";
 
 const ProgressItemOperation = (props) => {
   const [updateShow, setUpdateShow] = useState(false);
   const [message, setMessage] = useState(false);
+  const [deleteShow, setDeleteShow] = useState(false);
 
   const [messageData, setMessageData] = useState({
     title: "",
@@ -39,6 +41,17 @@ const ProgressItemOperation = (props) => {
     setUpdateShow(true);
   };
 
+  const deleteEventHandler = () => {
+    setMessageData({
+      title: "Delete!",
+      content:
+        "Would you really like to delete the task: [ " +
+        props.title +
+        " ]?",
+    });
+    setDeleteShow(true);
+  };
+
   const token = localStorage.getItem("token");
   const dispatch = useDispatch();
 
@@ -57,15 +70,44 @@ const ProgressItemOperation = (props) => {
       .then((result) => {
         dispatch({
           type: "taskUpdateOne",
-          task: result[0],
+          task: props.id,
         });
         setMessageData({
           title: "Success!",
-          content: "You have updated the task: [ " + result[0].title + " ]",
+          content: "You have updated the task: [ " + props.title + " ]",
         });
         setMessage(true);
         setUpdateShow(false);
-      })
+      });
+  };
+
+  const fetchDeleteTask = () => {
+    console.log('aaa ' + props.id)
+
+    fetch("http://localhost:5000/task/delete-task", {
+      method: "DELETE",
+      mode: "cors",
+      headers: {
+        auth: token,
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({_id:props.id}),
+    })
+      .then((res) => (res = res.json()))
+      .then((result) => {
+        
+        dispatch({
+          type: "taskDeleteOne",
+          task: props.id,
+        });
+        setMessageData({
+          title: "Success!",
+          content: "You have delete the task: [ " + props.title + " ]",
+        });
+        setMessage(true);
+        setUpdateShow(false);
+      });
   };
 
   return (
@@ -74,7 +116,15 @@ const ProgressItemOperation = (props) => {
         <h1>{props.title}</h1>
       </div>
       <div className={styles.operation}>
-      {message && (
+        {deleteShow && (
+          <ConfirmationModal
+            closeHandler={setDeleteShow}
+            yesHandler={fetchDeleteTask}
+            title={messageData.title}
+            content={messageData.content}
+          ></ConfirmationModal>
+        )}
+        {message && (
           <MessageModal
             closeHandler={setMessage}
             title={messageData.title}
@@ -93,7 +143,7 @@ const ProgressItemOperation = (props) => {
           ></TaskCard>
         )}
         <Button name="Edit" event={updateEventHandler}></Button>
-        <Button name="Delete"></Button>
+        <Button name="Delete" event={deleteEventHandler}></Button>
       </div>
     </div>
   );

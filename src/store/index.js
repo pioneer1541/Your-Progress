@@ -12,13 +12,14 @@ const userReducer = (state = initState, action) => {
         username: action.username,
         taskList: state.taskList,
       };
-
-    case "taskAddOne":
+    case "logout":
       return {
-        userIsAuth: state.userIsAuth,
-        username: state.username,
-        taskList: [...state.taskList, action.task],
+        userIsAuth: action.userIsAuth,
+        username: action.username,
+        taskList: state.taskList,
       };
+    case "taskAddOne":
+      return initState;
 
     case "taskUpdateAll":
       return {
@@ -27,8 +28,9 @@ const userReducer = (state = initState, action) => {
         taskList: action.taskList,
       };
     case "taskUpdateOne":
-      let newTaskList = state.taskList.map((task) => {
-        if (task._id === action.task._id) {
+      console.log("task = " + action.task);
+      let newTaskListAfterUpdate = state.taskList.map((task) => {
+        if (task._id === action.task) {
           return action.task;
         } else {
           return task;
@@ -37,7 +39,18 @@ const userReducer = (state = initState, action) => {
       return {
         userIsAuth: state.userIsAuth,
         username: state.username,
-        taskList: newTaskList,
+        taskList: newTaskListAfterUpdate,
+      };
+
+    case "taskDeleteOne":
+      console.log("task = " + action.task);
+      let newTaskListAfterDelete = state.taskList.filter(
+        (task) => task._id !== action.task
+      );
+      return {
+        userIsAuth: state.userIsAuth,
+        username: state.username,
+        taskList: newTaskListAfterDelete,
       };
     default:
       break;

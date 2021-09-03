@@ -23,7 +23,7 @@ const ProgressItem = (props) => {
         </div>
       </div>
       <div>
-        <p>{differenceDaysFromNow} days to {props.title}</p>
+        <p><strong>{differenceDaysFromNow}</strong> days to {props.title}</p>
       </div>
       <div className={"progress " + styles.item} style={{ height: "30px" }}>
         <div

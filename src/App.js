@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Redirect, Route } from "react-router-dom";
 import "./App.css";
 import { useSelector, useDispatch } from "react-redux";
 
-import Progress from "./Components/Progress/Progress";
+import Progress from "./Components/Layout/Layout";
 import Login from "./Components/Login/Login";
 import Register from "./Components/Register/Register";
 
@@ -29,7 +29,6 @@ function App() {
           }
         })
         .then((user) => {
-          console.log(user);
           dispatch({
             type: "login",
             userIsAuth: true,

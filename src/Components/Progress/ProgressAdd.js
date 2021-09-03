@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import Button from "../Layout/Button";
+import Button from "../UI/Button";
 import MessageModal from "../UI/MessageModal";
 import TaskCard from "../UI/TaskCard";
 import styles from "./ProgressAdd.module.css";
