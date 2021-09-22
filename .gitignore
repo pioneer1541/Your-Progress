@@ -1,9 +1,0 @@
-node_modules
-/.env
-/.env.production
-/.firebaserc
-/firebase.json
-/build
-/.github
-/.gitignore
-/.vscode
