@@ -7,16 +7,19 @@ const Login = (props) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loginError, setLoginError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const [user, setUser] = useState({});
   const dispatch = useDispatch();
 
   const usernameHandler = (event) => {
     const username = event.target.value;
+    setLoginError(false);
     setUsername(username);
   };
 
   const passwordHandler = (event) => {
     const passwd = event.target.value;
+    setLoginError(false);
     setPassword(passwd);
   };
 
@@ -32,18 +35,16 @@ const Login = (props) => {
         setLoginError(true)
       }
     }
-    console.log(loginError)
   }, [user]);
 
   const loginHandler = (event) => {
     event.preventDefault();
-    console.log(1010)
     const user = {
       username: username,
       password: password,
     };
 
-    fetch("http://localhost:5000/user/login", {
+    fetch(process.env.REACT_APP_BACKEND_URL + "/user/login", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -54,24 +55,25 @@ const Login = (props) => {
     })
       .then((res) => {
         if (!res.ok) {
-          throw "Username or Password is incorrect!";
+          throw Error
         } else {
           return (res = res.json());
         }
       })
       .then((data) => setUser(data))
-      .catch((error) => {
+      .catch((err) => {
         setLoginError(true);
+        setErrorMessage("username or password is incorrect!")
       });
   };
 
   return (
     <div className={styles.main}>
       <div className={styles.border}>
-        <div className={styles.title}>
+        <div className={styles.title  + " text-white"}>
           <h1>Login</h1>
         </div>
-        <div className={styles.title}>
+        <div className={styles.title + " text-white"}>
           <p>Welcome to Your Progress!</p>
         </div>
         <form onSubmit={loginHandler} className={styles.form}>
@@ -93,20 +95,20 @@ const Login = (props) => {
           ></input>
           {loginError && (
             <div className="alert alert-danger">
-              Username or Password is incorrect!
+              {errorMessage}
             </div>
           )}
-          <div className={styles.actions}>
+          <div className={styles.actions + ' my-3'}>
           <Button name="Sign in" type="submit"></Button>
           </div>
           
         </form>
       </div>
-      <div className={styles.register}>
+      <div className={styles.register + ' text-white'}>
         <p>
           New to Your Progress?{" "}
           <span>
-            <a href="/register">Sign on!</a>
+            <a className="text-warning" href="/register">Sign on!</a>
           </span>
         </p>
       </div>

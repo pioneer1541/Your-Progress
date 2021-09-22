@@ -1,9 +1,12 @@
 .main {
     display: grid;
     grid-template-columns: 1fr 8fr 1fr;
-    height: 100%;
-    padding: 20px;
     
+}
+
+.cardUl {
+    list-style-type: none;
+    padding:0;
 }
 
 .list {

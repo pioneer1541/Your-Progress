@@ -1,0 +1,61 @@
+.card {
+  background: white;
+}
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 10;
+  background: rgba(0, 0, 0, 0.75);
+}
+
+.modal {
+  background-color: white;
+  position: fixed;
+  top: 30vh;
+  left: 10%;
+  width: 80%;
+  z-index: 100;
+  overflow: hidden;
+}
+
+.header {
+  background: #5d8081;
+  padding: 1rem;
+}
+
+.header h2 {
+  text-align: center;
+  color: white;
+}
+
+.content {
+  text-align: center;
+  background-color: rgb(252, 253, 253);
+}
+
+
+.message {
+  margin: 1rem;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+}
+
+.actions {
+  background: #97d1d3;
+  padding: 1rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+@media (min-width: 768px) {
+  .modal {
+    left: calc(50% - 20rem);
+    width: 40rem;
+  }
+}

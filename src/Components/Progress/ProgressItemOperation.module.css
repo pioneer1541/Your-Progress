@@ -1,17 +1,12 @@
 .main {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
+    margin-top: 20px;
 }
 
 .operation {
     display: flex;
     flex-direction: row;
-}
-
-.button {
-    width: 80px;
-    margin-right:10px;
-    margin-left:10px;
 }

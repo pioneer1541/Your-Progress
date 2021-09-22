@@ -10,7 +10,6 @@ const ProgressItemOperation = (props) => {
   const [updateShow, setUpdateShow] = useState(false);
   const [message, setMessage] = useState(false);
   const [deleteShow, setDeleteShow] = useState(false);
-
   const [messageData, setMessageData] = useState({
     title: "",
     content: "",
@@ -45,9 +44,7 @@ const ProgressItemOperation = (props) => {
     setMessageData({
       title: "Delete!",
       content:
-        "Would you really like to delete the task: [ " +
-        props.title +
-        " ]?",
+        "Would you really like to delete the task: [ " + props.title + " ]?",
     });
     setDeleteShow(true);
   };
@@ -56,7 +53,7 @@ const ProgressItemOperation = (props) => {
   const dispatch = useDispatch();
 
   const fetchUpdatedTask = (task) => {
-    fetch("http://localhost:5000/task/update-task", {
+    fetch(process.env.REACT_APP_BACKEND_URL + "/task/update-task", {
       method: "POST",
       mode: "cors",
       headers: {
@@ -68,23 +65,33 @@ const ProgressItemOperation = (props) => {
     })
       .then((res) => (res = res.json()))
       .then((result) => {
-        dispatch({
-          type: "taskUpdateOne",
-          task: props.id,
-        });
-        setMessageData({
-          title: "Success!",
-          content: "You have updated the task: [ " + props.title + " ]",
-        });
-        setMessage(true);
-        setUpdateShow(false);
+        if (result.state) {
+          setMessageData({
+            title: "Success!",
+            content: "You have updated the task: [ " + props.title + " ]",
+          });
+          setMessage(true);
+          setUpdateShow(false);
+          dispatch({
+            type: "taskUpdateOne",
+            task: props.id,
+            taskNewData: result[0],
+          });
+        } else {
+          setMessageData({
+            title: "Failed!",
+            content: result.message,
+          });
+          setMessage(true);
+          setUpdateShow(false);
+        }
       });
   };
 
   const fetchDeleteTask = () => {
-    console.log('aaa ' + props.id)
+    console.log("aaa " + props.id);
 
-    fetch("http://localhost:5000/task/delete-task", {
+    fetch(process.env.REACT_APP_BACKEND_URL + "/task/delete-task", {
       method: "DELETE",
       mode: "cors",
       headers: {
@@ -92,29 +99,34 @@ const ProgressItemOperation = (props) => {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({_id:props.id}),
+      body: JSON.stringify({ _id: props.id }),
     })
       .then((res) => (res = res.json()))
       .then((result) => {
-        
-        dispatch({
-          type: "taskDeleteOne",
-          task: props.id,
-        });
-        setMessageData({
-          title: "Success!",
-          content: "You have delete the task: [ " + props.title + " ]",
-        });
-        setMessage(true);
-        setUpdateShow(false);
+        if (result.state) {
+          setMessageData({
+            title: "Success!",
+            content: "You have delete the task: [ " + props.title + " ]",
+          });
+          setMessage(true);
+          setUpdateShow(false);
+          dispatch({
+            type: "taskDeleteOne",
+            task: props.id,
+          });
+        } else {
+          setMessageData({
+            title: "Failed!",
+            content: result.message,
+          });
+          setMessage(true);
+          setUpdateShow(false);
+        }
       });
   };
 
   return (
     <div className={styles.main}>
-      <div>
-        <h1>{props.title}</h1>
-      </div>
       <div className={styles.operation}>
         {deleteShow && (
           <ConfirmationModal
@@ -142,8 +154,16 @@ const ProgressItemOperation = (props) => {
             action="Update"
           ></TaskCard>
         )}
-        <Button name="Edit" event={updateEventHandler}></Button>
-        <Button name="Delete" event={deleteEventHandler}></Button>
+        <Button
+          name=" Edit"
+          event={updateEventHandler}
+          emo="fas fa-edit"
+        ></Button>
+        <Button
+          name=" Delete"
+          event={deleteEventHandler}
+          emo="fas fa-trash-alt"
+        ></Button>
       </div>
     </div>
   );

@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import Button from "../UI/Button";
 import MessageModal from "../UI/MessageModal";
 import TaskCard from "../UI/TaskCard";
 import styles from "./ProgressAdd.module.css";
@@ -18,7 +17,7 @@ const ProgressAdd = (props) => {
     content: "",
   });
   const fetchNewTask = (task) => {
-    fetch("http://localhost:5000/task/new-task", {
+    fetch(process.env.REACT_APP_BACKEND_URL + "/task/new-task", {
       method: "POST",
       mode: "cors",
       headers: {
@@ -30,21 +29,29 @@ const ProgressAdd = (props) => {
     })
       .then((res) => (res = res.json()))
       .then((result) => {
-        dispatch({
-          type: "taskAddOne",
-          task: result,
-        });
-        setMessageData({
-          title: "Success!",
-          content: "You have created a new Task: [ " + result.title + " ]",
-        });
-        setMessage(true);
-        setShowNewTaskModal(false);
+        if (result.state) {
+          dispatch({
+            type: "taskAddOne",
+            task: result,
+          });
+          setMessageData({
+            title: "Success!",
+            content: "You have created a new Task: [ " + result.title + " ]",
+          });
+          setMessage(true);
+          setShowNewTaskModal(false);
+        } else {
+          setMessageData({
+            title: "Failed!",
+            content: result.message,
+          });
+          setMessage(true);
+          setShowNewTaskModal(false);
+        }
       });
   };
   return (
-    <div className={styles.main}>
-      <div></div>
+    <div className={"nav-item mx-auto"}>
       <div className={styles.actions}>
         {message && (
           <MessageModal
@@ -60,10 +67,13 @@ const ProgressAdd = (props) => {
             changeModalHandler={setShowNewTaskModal}
           ></TaskCard>
         )}
-        <h4>would you like to start a new progress task?</h4>
-        <Button name="New Progress" event={newProgressHandler}></Button>
+        <a
+          className="text-white btn-lg btn btn-dark"
+          onClick={newProgressHandler}
+        >
+          <i className="fas fa-plus-circle"></i> New Task
+        </a>
       </div>
-      <div></div>
     </div>
   );
 };

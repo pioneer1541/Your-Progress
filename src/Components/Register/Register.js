@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 
 const Register = () => {
-  let history = useHistory()
+  let history = useHistory();
   const [username, setUsername] = useState("");
   const [usernameIsChanged, setUsernameIsChanged] = useState(false);
   const [usernameError, setUsernameError] = useState("");
@@ -14,7 +14,8 @@ const Register = () => {
   const [confirm_passwd, setConfirm_passwd] = useState();
   const [confirm_passwdIsChanged, setConfirm_passwdIsChanged] = useState(false);
   const [confirm_passwdError, setConfirm_passwdError] = useState("");
-
+  const [registerError, setRegisterError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   useEffect(() => {
     if (usernameIsChanged) {
       if (username.length < 8) {
@@ -80,7 +81,7 @@ const Register = () => {
 
     const user = { username: username, password: passwd };
 
-    fetch("http://localhost:5000/user/new-user", {
+    fetch(process.env.REACT_APP_BACKEND_URL + "/user/new-user", {
       method: "POST",
       mode: "cors",
       headers: {
@@ -89,21 +90,27 @@ const Register = () => {
       },
       body: JSON.stringify(user),
     })
-      .then((res) => (res = res.json()))
-      .then((data) => {
-        if (data.result) {
-          history.push('/');
+      .then((res) => {
+        if (!res.ok) {
+          return res.text().then((text) => {
+            throw new Error(text);
+          });
+        } else {
+          return (res = res.json());
         }
+      })
+      .catch((err) => {
+        setRegisterError(true);
+        setErrorMessage(err.message);
       });
   };
   return (
     <div className={styles.main}>
       <div className={styles.border}>
-        <div className={styles.title}>
+        <div className={styles.title + " text-white"}>
           <h1>Sign on</h1>
         </div>
         <form onSubmit={submitHandler} className={styles.form}>
-          {/* <form action={'http://localhost:5000/new-user'} method="POST" className={styles.form}> */}
           <label className={styles.control}>Username:</label>
           <input
             className={styles.control}
@@ -146,8 +153,23 @@ const Register = () => {
           ) : (
             ""
           )}
-          <Button name="Sign on" type="submit"></Button>
+          <div className="my-3 d-flex flex-row justify-content-center">
+            <Button
+              name="Back"
+              event={() => {
+                history.push("/");
+              }}
+            ></Button>
+            <Button name="Sign on" type="submit"></Button>
+          </div>
         </form>
+        {registerError && (
+          <div className={styles.message}>
+            <div className="alert alert-danger">
+              {errorMessage}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

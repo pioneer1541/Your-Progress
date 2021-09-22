@@ -28,14 +28,15 @@ const userReducer = (state = initState, action) => {
         taskList: action.taskList,
       };
     case "taskUpdateOne":
-      console.log("task = " + action.task);
       let newTaskListAfterUpdate = state.taskList.map((task) => {
         if (task._id === action.task) {
-          return action.task;
+          console.log(task._id)
+          return action.taskNewData;
         } else {
           return task;
         }
       });
+      console.log(newTaskListAfterUpdate)
       return {
         userIsAuth: state.userIsAuth,
         username: state.username,
