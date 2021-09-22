@@ -32,7 +32,7 @@ const Login = (props) => {
           userIsAuth: true,
           username: user.username,
         });
-        setLoginError(true)
+        setLoginError(true);
       }
     }
   }, [user]);
@@ -55,7 +55,7 @@ const Login = (props) => {
     })
       .then((res) => {
         if (!res.ok) {
-          throw Error
+          throw Error;
         } else {
           return (res = res.json());
         }
@@ -63,14 +63,14 @@ const Login = (props) => {
       .then((data) => setUser(data))
       .catch((err) => {
         setLoginError(true);
-        setErrorMessage("username or password is incorrect!")
+        setErrorMessage("username or password is incorrect!");
       });
   };
 
   return (
     <div className={styles.main}>
       <div className={styles.border}>
-        <div className={styles.title  + " text-white"}>
+        <div className={styles.title + " text-white"}>
           <h1>Login</h1>
         </div>
         <div className={styles.title + " text-white"}>
@@ -94,24 +94,24 @@ const Login = (props) => {
             className={styles.control}
           ></input>
           {loginError && (
-            <div className="alert alert-danger">
-              {errorMessage}
-            </div>
+            <div className="alert alert-danger">{errorMessage}</div>
           )}
-          <div className={styles.actions + ' my-3'}>
-          <Button name="Sign in" type="submit"></Button>
+          <div className={styles.actions + " my-3"}>
+            <Button name="Sign in" type="submit"></Button>
           </div>
-          
         </form>
       </div>
-      <div className={styles.register + ' text-white'}>
+      <div className={styles.register + " text-white"}>
         <p>
           New to Your Progress?{" "}
           <span>
-            <a className="text-warning" href="/register">Sign on!</a>
+            <a className="text-warning" href="/register">
+              Sign on!
+            </a>
           </span>
         </p>
       </div>
+      <div>Created By Vincent</div>
     </div>
   );
 };

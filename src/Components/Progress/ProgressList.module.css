@@ -1,16 +1,22 @@
 .main {
-    display: grid;
-    grid-template-columns: 1fr 8fr 1fr;
-    
+  display: grid;
+  grid-template-columns: 1fr 8fr 1fr;
 }
 
 .cardUl {
-    list-style-type: none;
-    padding:0;
+  list-style-type: none;
+  padding: 0;
 }
 
 .list {
-    border: 1px solid black;
-    list-style: none;
-    padding-inline-start: 0px;
+  border: 1px solid black;
+  list-style: none;
+  padding-inline-start: 0px;
+}
+
+@media only screen and (max-width: 600px) {
+    .main {
+        display: grid;
+        grid-template-columns: 1fr;
+      }
 }

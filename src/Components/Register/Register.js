@@ -99,10 +99,15 @@ const Register = () => {
           return (res = res.json());
         }
       })
+      .then((data) => {
+        history.push("/");
+      })
       .catch((err) => {
         setRegisterError(true);
         setErrorMessage(err.message);
-      });
+        return
+      })
+      
   };
   return (
     <div className={styles.main}>
@@ -165,9 +170,7 @@ const Register = () => {
         </form>
         {registerError && (
           <div className={styles.message}>
-            <div className="alert alert-danger">
-              {errorMessage}
-            </div>
+            <div className="alert alert-danger">{errorMessage}</div>
           </div>
         )}
       </div>

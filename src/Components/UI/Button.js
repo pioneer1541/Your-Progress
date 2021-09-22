@@ -7,7 +7,7 @@ const Button = (props) => {
   return (
     <div className={styles.main}>
       <button
-        className={"btn btn-outline-primary btn-block"}
+        className={"btn btn-outline-primary"}
         type={buttonType}
         onClick={buttonEvent}
       >
